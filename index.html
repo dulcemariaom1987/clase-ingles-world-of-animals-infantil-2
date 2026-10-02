@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Comparativos y Fichas de Animales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#FF4FA8; --pink-soft:#FFD3EC; --pink-dark:#D6338C;
+    --purple:#7B2FBF; --purple-dark:#54198C; --lav:#F6ECFF;
+    --yellow:#FFD84D; --green:#3FC98A; --red:#FF6B6B;
+    --text:#3B1B5C;
+    --shadow: 0 8px 0 rgba(84,25,140,.18);
+    padding-top: env(safe-area-inset-top,0px);
+    padding-bottom: env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  body{margin:0; min-height:100%; font-family:'Nunito',sans-serif; color:var(--text);
+    background:radial-gradient(circle at 10% 0%, #FFE3F5 0%, var(--lav) 45%, #EFE0FF 100%); background-attachment:fixed;}
+  h1,h2,h3{font-family:'Baloo 2',sans-serif; margin:0;}
+  .wrap{max-width:980px;margin:0 auto;padding:0 16px 60px;}
+  .hero{background:linear-gradient(135deg,var(--purple) 0%, var(--pink) 100%); border-radius:0 0 40px 40px; padding:36px 20px 46px; text-align:center; position:relative; overflow:hidden; box-shadow:0 10px 30px rgba(123,47,191,.3);}
+  .hero .floaters{position:absolute; inset:0; pointer-events:none; font-size:2rem;}
+  .hero .floaters span{position:absolute; animation:float 6s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-18px) rotate(8deg);}}
+  .hero .badge{display:inline-block;background:var(--yellow);color:var(--purple-dark);font-family:'Baloo 2';font-weight:800;padding:6px 18px;border-radius:999px;font-size:.85rem;box-shadow:0 4px 0 #E0B92A;}
+  .hero h1{color:#fff;font-size:2.1rem;margin-top:10px;text-shadow:0 3px 0 rgba(0,0,0,.12);}
+  .hero p{color:#FFE9F8;font-size:1.02rem;max-width:580px;margin:10px auto 0;font-weight:600;}
+  nav{position:sticky; top:0; z-index:50; background:rgba(255,255,255,.9); backdrop-filter:blur(6px); padding:10px 0; margin-top:-24px; border-radius:24px; box-shadow:0 6px 20px rgba(123,47,191,.15);}
+  .navrow{display:flex; gap:8px; overflow-x:auto; padding:0 14px; scrollbar-width:none;}
+  .navrow::-webkit-scrollbar{display:none;}
+  .navbtn{flex:0 0 auto; border:none; background:var(--lav); color:var(--purple-dark); font-family:'Baloo 2'; font-weight:700; font-size:.85rem; padding:10px 16px; border-radius:999px; cursor:pointer; white-space:nowrap;}
+  .navbtn.active{background:linear-gradient(135deg,var(--pink),var(--purple)); color:#fff; box-shadow:0 4px 0 var(--purple-dark);}
+  section{display:none; padding-top:26px; animation:fadeIn .4s ease;}
+  section.active{display:block;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+  .card{background:#fff; border-radius:22px; padding:20px 22px; box-shadow:var(--shadow); margin-bottom:22px; border:3px solid #fff;}
+  .sec-title{display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+  .sec-title .icon{font-size:1.8rem;}
+  .sec-title h2{color:var(--purple-dark); font-size:1.3rem;}
+  .subtext{color:#6B4694; font-weight:600; font-size:.95rem; margin-bottom:14px;}
+  .spk{border:none; background:var(--purple); color:#fff; border-radius:999px; width:32px; height:32px; font-size:.95rem; cursor:pointer; box-shadow:0 3px 0 var(--purple-dark); flex:0 0 auto;}
+  .spk:active{transform:translateY(2px); box-shadow:none;}
+  .spk.sm{width:26px;height:26px;font-size:.8rem;}
+  .en{color:var(--pink-dark); font-weight:800;}
+  /* rule box */
+  .rulebox{background:var(--lav); border-radius:18px; padding:16px 18px; margin-bottom:14px;}
+  .rulebox b{color:var(--purple-dark);}
+  .ruleex{display:inline-flex; align-items:center; gap:6px; background:#fff; border-radius:999px; padding:6px 12px; margin:4px 6px 4px 0; font-weight:800; box-shadow:0 2px 0 #E4CCF7;}
+  /* category cards */
+  .catgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:16px;}
+  .catcard{background:linear-gradient(160deg,#fff,var(--pink-soft)); border-radius:20px; padding:16px; border:3px solid #fff; box-shadow:0 6px 0 #F1B9DB;}
+  .catcard h3{color:var(--purple-dark); font-size:1.1rem; display:flex; align-items:center; gap:8px;}
+  .catcard .ex-sentence{background:#fff; border-radius:12px; padding:8px 12px; margin-top:8px; display:flex; align-items:center; gap:8px; font-weight:700; font-size:.92rem;}
+  /* generic rows */
+  .row-flex{display:flex; align-items:center; gap:10px; padding:12px; border-radius:16px; background:var(--lav); margin-bottom:10px; flex-wrap:wrap;}
+  .row-flex .sentence{flex:1; min-width:180px; font-weight:700;}
+  .tfbtns button{border:none; padding:8px 14px; margin-left:6px; border-radius:999px; font-family:'Baloo 2'; font-weight:700; cursor:pointer;}
+  .tfbtns .vbtn{background:var(--green); color:#fff;}
+  .tfbtns .fbtn{background:var(--red); color:#fff;}
+  .fb{font-weight:800; margin-left:8px;}
+  .optbtn{border:2px solid var(--purple); padding:8px 14px; margin:3px; border-radius:999px; font-family:'Baloo 2'; font-weight:700; cursor:pointer; background:#fff; color:var(--purple-dark);}
+  .optbtn.correct{background:var(--green); color:#fff; border-color:#279A65;}
+  .optbtn.wrong{background:var(--red); color:#fff; border-color:#D64545;}
+  .checkbtn, .resetbtn{border:none; font-family:'Baloo 2'; font-weight:800; padding:11px 20px; border-radius:999px; cursor:pointer; margin-top:12px; margin-right:8px; font-size:.95rem;}
+  .checkbtn{background:var(--pink); color:#fff; box-shadow:0 4px 0 var(--pink-dark);}
+  .resetbtn{background:#fff; color:var(--purple-dark); border:2px solid var(--purple);}
+  .scorepill{display:inline-block; background:var(--yellow); color:var(--purple-dark); font-family:'Baloo 2'; font-weight:800; padding:6px 16px; border-radius:999px; margin-bottom:14px;}
+  .buildrow{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:12px;}
+  .buildrow select{font-family:'Nunito'; font-weight:800; color:var(--purple-dark); border:2px solid var(--purple); border-radius:10px; padding:6px 8px; background:#fff;}
+  .sentenceOut{background:var(--lav); border-radius:16px; padding:16px; font-weight:800; font-size:1.05rem; margin-top:6px; min-height:30px;}
+  /* fichas */
+  .fgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:16px;}
+  .ficha{background:#fff; border-radius:20px; padding:16px 18px; box-shadow:var(--shadow); border:3px solid var(--pink-soft);}
+  .ficha-head{display:flex; align-items:center; gap:10px; margin-bottom:8px;}
+  .ficha-head .emo{font-size:2.3rem;}
+  .ficha-head .names{flex:1;}
+  .ficha-head .en-name{font-family:'Baloo 2'; font-weight:800; color:var(--purple-dark); font-size:1.1rem;}
+  .ficha-head .es-name{color:#8A5CB8; font-weight:700; font-size:.85rem;}
+  .ficha-row{margin:7px 0; font-size:.92rem;}
+  .ficha-row .lbl{font-weight:800; color:var(--pink-dark);}
+  .chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;}
+  .chip{background:var(--lav); border-radius:999px; padding:4px 10px; font-size:.78rem; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:4px;}
+  .chip:hover{background:var(--pink-soft);}
+  footer{text-align:center; color:#8A5CB8; font-weight:700; padding:26px 10px; font-size:.85rem;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="floaters">
+    <span style="left:6%;top:14%;animation-delay:0s;">🌸</span>
+    <span style="left:85%;top:10%;animation-delay:1s;">✨</span>
+    <span style="left:14%;top:70%;animation-delay:2s;">💫</span>
+    <span style="left:80%;top:66%;animation-delay:1.4s;">⭐</span>
+  </div>
+  <span class="badge">UNIT 7 · EXTRA</span>
+  <h1>⚖️ Comparing Animals 🐾</h1>
+  <p>Clase especial para aprender a comparar animales en inglés: tamaño, longitud, fuerza, rapidez y habilidades. ¡Más las fichas de todos nuestros animales!</p>
+</div>
+
+<div class="wrap">
+  <nav><div class="navrow">
+    <button class="navbtn active" data-sec="s-intro">🏠 Inicio</button>
+    <button class="navbtn" data-sec="s-exp">📚 Explicación</button>
+    <button class="navbtn" data-sec="s-prac">✏️ Práctica</button>
+    <button class="navbtn" data-sec="s-fichas">🗂️ Fichas de animales</button>
+  </div></nav>
+
+  <!-- INTRO -->
+  <section id="s-intro" class="active">
+    <div class="card">
+      <div class="sec-title"><span class="icon">👋</span><h2>¡Hola de nuevo!</h2></div>
+      <p class="subtext" style="font-size:1rem;">Hoy vamos a aprender a <b>comparar animales</b> en inglés: cuál es más grande, más largo, más fuerte, más rápido, o cuál salta o nada mejor que otro. Vamos a ver la explicación paso a paso, practicar con juegos, y al final tendrás fichas con toda la información de cada animal del vocabulario, en inglés y español. Haz clic en cualquier botón 🔊 para escuchar la pronunciación. ¡Empecemos! 🎉</p>
+    </div>
+  </section>
+
+  <!-- EXPLICACIÓN -->
+  <section id="s-exp">
+    <div class="card">
+      <div class="sec-title"><span class="icon">📏</span><h2>¿Cómo se forman los comparativos?</h2></div>
+      <p class="subtext">Usamos los comparativos para decir que un animal tiene "más" de una característica que otro. La estructura es siempre la misma:</p>
+      <div class="rulebox">
+        <b>Animal A + is/are + adjetivo comparativo + than + Animal B.</b><br>
+        <button class="spk sm" onclick="speak('The lion is stronger than the mouse.')">🔊</button> Ejemplo: <span class="en">The lion is stronger than the mouse.</span> (El león es más fuerte que el ratón.)
+      </div>
+      <p class="subtext" style="margin-top:14px;">Hay 4 reglas para formar el adjetivo comparativo:</p>
+      <div class="rulebox">
+        <b>1) Regla general:</b> agregamos <b>-er</b> al final del adjetivo.
+        <div><span class="ruleex">small <button class="spk sm" onclick="speak('small')">🔊</button> → smaller <button class="spk sm" onclick="speak('smaller')">🔊</button></span>
+        <span class="ruleex">long → longer <button class="spk sm" onclick="speak('longer')">🔊</button></span>
+        <span class="ruleex">strong → stronger <button class="spk sm" onclick="speak('stronger')">🔊</button></span></div>
+      </div>
+      <div class="rulebox">
+        <b>2) Adjetivo corto que termina en consonante-vocal-consonante:</b> duplicamos la última letra y agregamos <b>-er</b>.
+        <div><span class="ruleex">big → bigger <button class="spk sm" onclick="speak('bigger')">🔊</button></span>
+        <span class="ruleex">fat → fatter <button class="spk sm" onclick="speak('fatter')">🔊</button></span>
+        <span class="ruleex">thin → thinner <button class="spk sm" onclick="speak('thinner')">🔊</button></span></div>
+      </div>
+      <div class="rulebox">
+        <b>3) Adjetivo que termina en "y":</b> cambiamos la "y" por "i" y agregamos <b>-er</b>.
+        <div><span class="ruleex">dirty → dirtier <button class="spk sm" onclick="speak('dirtier')">🔊</button></span>
+        <span class="ruleex">easy → easier <button class="spk sm" onclick="speak('easier')">🔊</button></span>
+        <span class="ruleex">noisy → noisier <button class="spk sm" onclick="speak('noisier')">🔊</button></span></div>
+      </div>
+      <div class="rulebox">
+        <b>4) Adjetivos irregulares:</b> no siguen ninguna regla, ¡hay que memorizarlos!
+        <div><span class="ruleex">good → better <button class="spk sm" onclick="speak('better')">🔊</button></span>
+        <span class="ruleex">bad → worse <button class="spk sm" onclick="speak('worse')">🔊</button></span></div>
+        <p style="margin-top:8px;">Para hablar de una <b>habilidad</b> (como saltar o nadar) usamos: <span class="en">better at + verbo-ing</span> o <span class="en">worse at + verbo-ing</span>.
+        <button class="spk sm" onclick="speak('The dolphin is better at swimming than the lion.')">🔊</button> <span class="en">The dolphin is better at swimming than the lion.</span></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sec-title"><span class="icon">🔖</span><h2>Las 6 categorías para comparar animales</h2></div>
+      <p class="subtext">Haz clic en los botones 🔊 para escuchar cada palabra y cada oración de ejemplo.</p>
+      <div class="catgrid">
+        <div class="catcard">
+          <h3>📏 Tamaño (size)</h3>
+          <p>big → bigger, small → smaller, huge → huger (muy grande), tall → taller</p>
+          <div class="ex-sentence"><button class="spk sm" onclick="speak('The elephant is bigger than the monkey.')">🔊</button> The elephant is bigger than the monkey.</div>
+        </div>
+        <div class="catcard">
+          <h3>📐 Longitud (length)</h3>
+          <p>long → longer, short → shorter</p>
+          <div class="ex-sentence"><button class="spk sm" onclick="speak('The snake is longer than the bat.')">🔊</button> The snake is longer than the bat.</div>
+        </div>
+        <div class="catcard">
+          <h3>💪 Fuerza (strength)</h3>
+          <p>strong → stronger, weak → weaker</p>
+          <div class="ex-sentence"><button class="spk sm" onclick="speak('The tiger is stronger than the parrot.')">🔊</button> The tiger is stronger than the parrot.</div>
+        </div>
+        <div class="catcard">
+          <h3>⚡ Rapidez (speed)</h3>
+          <p>fast → faster, quick → quicker, slow → slower</p>
+          <div class="ex-sentence"><button class="spk sm" onclick="speak('The shark is faster than the jellyfish.')">🔊</button> The shark is faster than the jellyfish.</div>
+        </div>
+        <div class="catcard">
+          <h3>🦘 Saltar (jumping)</h3>
+          <p>good at jumping → better at jumping, bad at jumping → worse at jumping</p>
+          <div class="ex-sentence"><button class="spk sm" onclick="speak('The kangaroo is better at jumping than the bear.')">🔊</button> The kangaroo is better at jumping than the bear.</div>
+        </div>
+        <div class="catcard">
+          <h3>🏊 Nadar (swimming)</h3>
+          <p>good at swimming → better at swimming, bad at swimming → worse at swimming</p>
+          <div class="ex-sentence"><button class="spk sm" onclick="speak('The dolphin is better at swimming than the giraffe.')">🔊</button> The dolphin is better at swimming than the giraffe.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRÁCTICA -->
+  <section id="s-prac">
+    <div class="card">
+      <div class="sec-title"><span class="icon">✅</span><h2>Verdadero o Falso</h2></div>
+      <p class="subtext">Escucha y decide.</p>
+      <div id="tflist"></div>
+    </div>
+    <div class="card">
+      <div class="sec-title"><span class="icon">🔤</span><h2>Elige la forma comparativa correcta</h2></div>
+      <div class="scorepill" id="cfScore">Puntaje: 0/10</div>
+      <div id="cfList"></div>
+    </div>
+    <div class="card">
+      <div class="sec-title"><span class="icon">🧩</span><h2>Crea tu propia comparación</h2></div>
+      <p class="subtext">Elige una categoría, dos animales y el adjetivo. ¡Escucha tu oración!</p>
+      <div class="buildrow">
+        <select id="bCat" onchange="updateAdjOptions()"></select>
+        <select id="bA"></select>
+        <span>is</span>
+        <select id="bAdj"></select>
+        <span>than</span>
+        <select id="bB"></select>
+      </div>
+      <button class="checkbtn" onclick="buildSentence()">Crear oración ✨</button>
+      <button class="resetbtn" onclick="randomSentence()">Sorpréndeme 🎲</button>
+      <div class="sentenceOut" id="sentenceOut">Tu oración aparecerá aquí...</div>
+    </div>
+  </section>
+
+  <!-- FICHAS -->
+  <section id="s-fichas">
+    <div class="card">
+      <div class="sec-title"><span class="icon">🗂️</span><h2>Fichas de animales</h2></div>
+      <p class="subtext">Toda la información de cada animal en inglés y español. Haz clic en cualquier palabra en inglés para escucharla.</p>
+    </div>
+    <div class="fgrid" id="fgrid"></div>
+  </section>
+
+  <footer>Hecho con 💜 para aprender inglés jugando · Comparing Animals</footer>
+</div>
+
+<script>
+function speak(text){
+  try{
+    if(!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang='en-US'; u.rate=0.85; u.pitch=1.05;
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+document.querySelectorAll('.navbtn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.navbtn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.sec).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* ---------- ANIMALS DATA ---------- */
+const animals = [
+  {en:'bear', es:'oso', emo:'🐻', habEn:'forests and mountains', habEs:'bosques y montañas', foodEn:'fish, fruit, plants and meat', foodEs:'pescado, fruta, plantas y carne', feat:['Big and heavy / Grande y pesado','Brown or black fur / Pelaje café o negro'], parts:[['fur','pelaje'],['claws','garras'],['teeth','dientes'],['nose','nariz'],['paws','patas']]},
+  {en:'whale', es:'ballena', emo:'🐋', habEn:'the sea', habEs:'el mar', foodEn:'small sea animals and plants', foodEs:'pequeños animales marinos y plantas', feat:['Huge / Enorme','Blue or grey / Azul o gris'], parts:[['tail','cola'],['fin','aleta'],['blowhole','espiráculo'],['mouth','boca'],['skin','piel']]},
+  {en:'panda', es:'panda', emo:'🐼', habEn:'forests and mountains in China', habEs:'bosques y montañas de China', foodEn:'bamboo leaves', foodEs:'hojas de bambú', feat:['Round body / Cuerpo redondo','Black and white / Blanco y negro'], parts:[['fur','pelaje'],['paws','patas'],['ears','orejas'],['eyes','ojos'],['nose','nariz']]},
+  {en:'lion', es:'león', emo:'🦁', habEn:'the savannah in Africa', habEs:'la sabana de África', foodEn:'meat', foodEs:'carne', feat:['Strong and big / Fuerte y grande','Golden or brown / Dorado o café'], parts:[['mane','melena'],['teeth','dientes'],['claws','garras'],['tail','cola'],['paws','patas']]},
+  {en:'kangaroo', es:'canguro', emo:'🦘', habEn:'Australia', habEs:'Australia', foodEn:'grass and plants', foodEs:'pasto y plantas', feat:['Big legs / Patas grandes','Brown or grey / Café o gris'], parts:[['strong legs','patas fuertes'],['tail','cola'],['pouch','bolsa'],['ears','orejas'],['arms','brazos']]},
+  {en:'dolphin', es:'delfín', emo:'🐬', habEn:'the sea', habEs:'el mar', foodEn:'fish', foodEs:'pescado', feat:['Clever / Inteligente','Grey / Gris'], parts:[['fin','aleta'],['tail','cola'],['nose','hocico'],['skin','piel'],['eyes','ojos']]},
+  {en:'bat', es:'murciélago', emo:'🦇', habEn:'caves and trees', habEs:'cuevas y árboles', foodEn:'fruit and insects', foodEs:'fruta e insectos', feat:['Small / Pequeño','Brown or black / Café o negro'], parts:[['wings','alas'],['ears','orejas'],['teeth','dientes'],['eyes','ojos'],['claws','garras']]},
+  {en:'shark', es:'tiburón', emo:'🦈', habEn:'the sea', habEs:'el mar', foodEn:'fish and other sea animals', foodEs:'pescado y otros animales marinos', feat:['Big / Grande','Grey / Gris'], parts:[['fin','aleta'],['teeth','dientes'],['tail','cola'],['skin','piel'],['gills','branquias']]},
+  {en:'parrot', es:'loro', emo:'🦜', habEn:'forests', habEs:'bosques', foodEn:'fruit and seeds', foodEs:'fruta y semillas', feat:['Colorful / Colorido','Loud / Ruidoso'], parts:[['wings','alas'],['feathers','plumas'],['beak','pico'],['feet','patas'],['tail','cola']]},
+  {en:'jellyfish', es:'medusa', emo:'🪼', habEn:'the sea', habEs:'el mar', foodEn:'small sea animals', foodEs:'pequeños animales marinos', feat:['Soft body / Cuerpo blando','Transparent or pink / Transparente o rosada'], parts:[['tentacles','tentáculos'],['bell','campana'],['mouth','boca'],['stinger','aguijón'],['skin','piel']]},
+  {en:'penguin', es:'pingüino', emo:'🐧', habEn:'cold water near Antarctica', habEs:'aguas frías cerca de la Antártica', foodEn:'fish', foodEs:'pescado', feat:["Can't fly but can swim / No vuela pero nada",'Black and white / Blanco y negro'], parts:[['flippers','aletas'],['feathers','plumas'],['beak','pico'],['feet','patas'],['tail','cola']]},
+  {en:'elephant', es:'elefante', emo:'🐘', habEn:'Africa and Asia', habEs:'África y Asia', foodEn:'fruit, plants and grass', foodEs:'fruta, plantas y pasto', feat:['Huge / Enorme','Grey / Gris'], parts:[['trunk','trompa'],['tusks','colmillos'],['ears','orejas'],['legs','patas'],['tail','cola']]},
+  {en:'tiger', es:'tigre', emo:'🐯', habEn:'forests', habEs:'bosques', foodEn:'meat', foodEs:'carne', feat:['Strong / Fuerte','Orange and black / Naranjo y negro'], parts:[['stripes','rayas'],['claws','garras'],['teeth','dientes'],['tail','cola'],['paws','patas']]},
+  {en:'giraffe', es:'jirafa', emo:'🦒', habEn:'the savannah in Africa', habEs:'la sabana de África', foodEn:'leaves', foodEs:'hojas', feat:['Very tall / Muy alta','Yellow with spots / Amarilla con manchas'], parts:[['long neck','cuello largo'],['legs','patas'],['horns','cuernos'],['spots','manchas'],['tail','cola']]},
+  {en:'monkey', es:'mono', emo:'🐒', habEn:'forests', habEs:'bosques', foodEn:'fruit and insects', foodEs:'fruta e insectos', feat:['Small or medium / Pequeño o mediano','Brown / Café'], parts:[['tail','cola'],['arms','brazos'],['hands','manos'],['ears','orejas'],['fur','pelaje']]},
+  {en:'snake', es:'serpiente', emo:'🐍', habEn:'forests, deserts and grass', habEs:'bosques, desiertos y pastizales', foodEn:'small animals', foodEs:'animales pequeños', feat:['Long / Larga','No legs / Sin patas'], parts:[['skin','piel'],['tongue','lengua'],['scales','escamas'],['tail','cola'],['fangs','colmillos']]}
+];
+
+/* ---------- FICHAS ---------- */
+const fgrid=document.getElementById('fgrid');
+animals.forEach(a=>{
+  const d=document.createElement('div');
+  d.className='ficha';
+  let partsHtml = a.parts.map(p=>`<span class="chip" onclick="speak('${p[0]}')">${p[0]} / ${p[1]} 🔊</span>`).join('');
+  let featHtml = a.feat.map(f=>`<li>${f}</li>`).join('');
+  d.innerHTML = `
+    <div class="ficha-head">
+      <span class="emo">${a.emo}</span>
+      <div class="names">
+        <div class="en-name">${a.en} <button class="spk sm" onclick="speak('${a.en}')">🔊</button></div>
+        <div class="es-name">${a.es}</div>
+      </div>
+    </div>
+    <div class="ficha-row"><span class="lbl">🏡 Dónde vive / Where it lives:</span> <span class="en">${a.habEn}</span> <button class="spk sm" onclick="speak('It lives in ${a.habEn}.')">🔊</button><br>${a.habEs}</div>
+    <div class="ficha-row"><span class="lbl">🍽️ Qué come / What it eats:</span> <span class="en">${a.foodEn}</span> <button class="spk sm" onclick="speak('It eats ${a.foodEn}.')">🔊</button><br>${a.foodEs}</div>
+    <div class="ficha-row"><span class="lbl">✨ Características físicas / Physical features:</span><ul style="margin:4px 0 0 18px; padding:0;">${featHtml}</ul></div>
+    <div class="ficha-row"><span class="lbl">🧩 Partes del cuerpo / Body parts:</span><div class="chips">${partsHtml}</div></div>
+  `;
+  fgrid.appendChild(d);
+});
+
+/* ---------- TRUE/FALSE ---------- */
+const tf = [
+  {s:'The elephant is bigger than the monkey.', a:true},
+  {s:'The snake is shorter than the bat.', a:false},
+  {s:'The tiger is stronger than the parrot.', a:true},
+  {s:'The jellyfish is faster than the shark.', a:false},
+  {s:'The kangaroo is better at jumping than the bear.', a:true},
+  {s:'The giraffe is better at swimming than the dolphin.', a:false}
+];
+const tflist=document.getElementById('tflist');
+tf.forEach((item,i)=>{
+  const row=document.createElement('div');
+  row.className='row-flex';
+  row.innerHTML=`<button class="spk sm" onclick="speak('${item.s}')">🔊</button>
+    <div class="sentence">${item.s}</div>
+    <div class="tfbtns">
+      <button class="vbtn" onclick="checkTF(this,${item.a},true)">Verdadero</button>
+      <button class="fbtn" onclick="checkTF(this,${item.a},false)">Falso</button>
+    </div>
+    <span class="fb" id="fb${i}"></span>`;
+  row.querySelectorAll('.tfbtns button').forEach(b=>b.dataset.idx=i);
+  tflist.appendChild(row);
+});
+function checkTF(btn, answer, chose){
+  const fb=document.getElementById('fb'+btn.dataset.idx);
+  if(chose===answer){ fb.textContent='¡Correcto! 🎉'; fb.style.color='#279A65'; }
+  else{ fb.textContent='¡Casi! Era '+(answer?'Verdadero':'Falso'); fb.style.color='#D64545'; }
+}
+
+/* ---------- COMPARATIVE FORM QUIZ ---------- */
+let cfScore=0, cfTotal=0;
+const cfQ = [
+  {q:'big →', options:['bigger','biger','bigest'], correct:'bigger'},
+  {q:'small →', options:['smaler','smallest','smaller'], correct:'smaller'},
+  {q:'long →', options:['longer','longier','longest'], correct:'longer'},
+  {q:'strong →', options:['strongest','stronger','strongier'], correct:'stronger'},
+  {q:'fat →', options:['fater','fattier','fatter'], correct:'fatter'},
+  {q:'dirty →', options:['dirtyer','dirtiest','dirtier'], correct:'dirtier'},
+  {q:'good →', options:['gooder','better','goodier'], correct:'better'},
+  {q:'bad →', options:['badder','worst','worse'], correct:'worse'},
+  {q:'quick →', options:['quicker','quickest','quickier'], correct:'quicker'},
+  {q:'noisy →', options:['noisyer','noisier','noisiest'], correct:'noisier'}
+];
+const cfList=document.getElementById('cfList');
+cfQ.forEach((q,i)=>{
+  const row=document.createElement('div');
+  row.className='row-flex';
+  row.innerHTML=`<div class="sentence">${q.q}</div><div class="opts" id="cf-opts${i}"></div><span class="fb" id="cf-fb${i}"></span>`;
+  cfList.appendChild(row);
+  const box=row.querySelector('.opts');
+  q.options.forEach(opt=>{
+    const b=document.createElement('button'); b.className='optbtn'; b.textContent=opt;
+    b.addEventListener('click',()=>{
+      const opts=box.querySelectorAll('.optbtn');
+      if(opts[0].disabled) return;
+      opts.forEach(x=>{x.disabled=true; if(x.textContent===q.correct) x.classList.add('correct'); else if(x.textContent===opt) x.classList.add('wrong');});
+      const ok = opt===q.correct;
+      const fb=document.getElementById('cf-fb'+i);
+      fb.textContent= ok?'¡Correcto! 🎉':'Correcta: '+q.correct;
+      fb.style.color= ok?'#279A65':'#D64545';
+      cfTotal++; if(ok) cfScore++;
+      document.getElementById('cfScore').textContent='Puntaje: '+cfScore+'/'+cfTotal;
+    });
+    box.appendChild(b);
+  });
+});
+
+/* ---------- SENTENCE BUILDER ---------- */
+const categories = [
+  {name:'Tamaño (size)', adjs:['bigger','smaller','taller']},
+  {name:'Longitud (length)', adjs:['longer','shorter']},
+  {name:'Fuerza (strength)', adjs:['stronger','weaker']},
+  {name:'Rapidez (speed)', adjs:['faster','quicker','slower']},
+  {name:'Saltar (jumping)', adjs:['better at jumping','worse at jumping']},
+  {name:'Nadar (swimming)', adjs:['better at swimming','worse at swimming']}
+];
+const bCat=document.getElementById('bCat'), bAdj=document.getElementById('bAdj'), bA=document.getElementById('bA'), bB=document.getElementById('bB');
+categories.forEach((c,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=c.name; bCat.appendChild(o); });
+function updateAdjOptions(){
+  bAdj.innerHTML='';
+  categories[bCat.value].adjs.forEach(a=>{ const o=document.createElement('option'); o.value=a; o.textContent=a; bAdj.appendChild(o); });
+}
+updateAdjOptions();
+animals.forEach(a=>{
+  const o1=document.createElement('option'); o1.value=a.en; o1.textContent=a.en; bA.appendChild(o1);
+  const o2=document.createElement('option'); o2.value=a.en; o2.textContent=a.en; bB.appendChild(o2);
+});
+function buildSentence(){
+  const sentence = `The ${bA.value} is ${bAdj.value} than the ${bB.value}.`;
+  document.getElementById('sentenceOut').textContent=sentence;
+  speak(sentence);
+}
+function randomSentence(){
+  bCat.value = Math.floor(Math.random()*categories.length);
+  updateAdjOptions();
+  bAdj.value = categories[bCat.value].adjs[Math.floor(Math.random()*categories[bCat.value].adjs.length)];
+  bA.value = animals[Math.floor(Math.random()*animals.length)].en;
+  bB.value = animals[Math.floor(Math.random()*animals.length)].en;
+  buildSentence();
+}
+</script>
+</body>
+</html>
